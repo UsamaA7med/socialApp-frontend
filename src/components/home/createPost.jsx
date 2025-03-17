@@ -8,8 +8,12 @@ import {
   Button,
   Input,
   Form,
+  Spinner,
 } from "@heroui/react";
 import { useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { createPost } from "../../store/postsSlice/thunk";
+import { addToast } from "@heroui/toast";
 
 export const CameraIcon = ({
   fill = "currentColor",
@@ -38,15 +42,27 @@ export const CameraIcon = ({
 };
 
 export default function CreatePost() {
+  const { user } = useSelector((state) => state.authSlice);
   const [image, setImage] = useState(null);
-  const [submitted, setSubmitted] = useState(null);
   const fileInputRef = useRef(null);
-  console.log(submitted);
+  const [textLength, setTextLength] = useState(0);
+  const dispatch = useDispatch();
   const onSubmit = (e) => {
     e.preventDefault();
 
     const data = Object.fromEntries(new FormData(e.currentTarget));
-    setSubmitted(data);
+    const formData = new FormData();
+    formData.append("text", data.text);
+    formData.append("image", image);
+    dispatch(createPost(formData)).then((data) => {
+      if (!data.error) {
+        addToast({
+          title: "Post created",
+          description: "Your post has been created successfully",
+          color: "success",
+        });
+      }
+    });
     e.target.reset();
     handleImageChange(e);
   };
@@ -58,7 +74,7 @@ export default function CreatePost() {
       file = event.target.files[0];
     }
     if (file) {
-      setImage(URL.createObjectURL(file));
+      setImage(file);
     } else {
       setImage(null);
     }
@@ -70,26 +86,34 @@ export default function CreatePost() {
   return (
     <Card className="min-w-80 w-1/2">
       <CardHeader className="flex gap-3">
-        <Avatar />
+        <Avatar src={user.profileImage?.url} />
         <div className="flex flex-col">
-          <p className="text-md">HeroUI</p>
-          <p className="text-small text-default-500">heroui.com</p>
+          <p className="text-md">{user.fullname}</p>
+          <p className="text-small text-default-500">@{user.username}</p>
         </div>
       </CardHeader>
       <Form onSubmit={onSubmit}>
-        <CardBody className="gap-3">
-          <Textarea name="text" placeholder="change the world" />
+        <CardBody className="gap-2">
+          <Textarea
+            name="text"
+            maxLength={500}
+            onValueChange={(value) => setTextLength(value.length)}
+            placeholder="Write your thoughts..."
+          />
+          <div className="flex justify-end">
+            <p>{textLength}/500</p>
+          </div>
           {image && (
             <div className="flex justify-center h-80">
               <img
-                src={image}
+                src={URL.createObjectURL(image)}
                 alt="Selected"
                 className="rounded-lg object-contain"
               />
             </div>
           )}
         </CardBody>
-        <CardFooter className="justify-between gap-5">
+        <CardFooter className="justify-between">
           <Input
             ref={fileInputRef}
             name="image"
@@ -108,7 +132,11 @@ export default function CreatePost() {
           >
             <CameraIcon />
           </Button>
-          <Button type="submit" color="primary">
+          <Button
+            isDisabled={textLength >= 3 || image !== null ? false : true}
+            type="submit"
+            color="primary"
+          >
             Post
           </Button>
         </CardFooter>

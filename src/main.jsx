@@ -1,14 +1,16 @@
 import { createRoot } from "react-dom/client";
 import "./index.css";
-import App from "./App.jsx";
-import { HeroUIProvider } from "@heroui/react";
 import { RouterProvider } from "react-router-dom";
 import router from "./routes/router.jsx";
 
+import store from "./store/store.js";
+import Providers from "./providers.jsx";
+import { Provider } from "react-redux";
+
 createRoot(document.getElementById("root")).render(
-  <HeroUIProvider>
-    <RouterProvider router={router}>
-      <App />
-    </RouterProvider>
-  </HeroUIProvider>
+  <Providers>
+    <Provider store={store}>
+      <RouterProvider router={router} />
+    </Provider>
+  </Providers>
 );

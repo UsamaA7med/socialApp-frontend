@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Navbar,
   NavbarBrand,
@@ -14,7 +14,11 @@ import {
   Link,
 } from "@heroui/react";
 import { ThemeSwitcher } from "../../themeSwitcher";
-import { Link as link, useLocation } from "react-router-dom";
+import { Link as link, useLocation, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../../store/authSlice/thunk";
+import { getProfile } from "../../store/profileSlice/thunk";
+import { addToast } from "@heroui/toast";
 
 export const AcmeLogo = () => {
   return (
@@ -30,8 +34,11 @@ export const AcmeLogo = () => {
 };
 
 export default function NavBar() {
-  const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+  const { user } = useSelector((state) => state.authSlice);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation().pathname;
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const menuItems = [
     { lable: "Home", link: "/" },
     { lable: "Notifications", link: "/notifications" },
@@ -83,21 +90,41 @@ export default function NavBar() {
         <Dropdown placement="bottom-end">
           <DropdownTrigger>
             <Avatar
-              isBordered
               as="button"
               className="transition-transform"
-              color="secondary"
               name="Jason Hughes"
               size="sm"
-              src="https://i.pravatar.cc/150?u=a042581f4e29026704d"
+              src={user.profileImage.url}
             />
           </DropdownTrigger>
           <DropdownMenu aria-label="Profile Actions" variant="flat">
-            <DropdownItem key="profile" className="h-14 gap-2">
+            <DropdownItem
+              onPress={() => {
+                dispatch(getProfile(user._id)).then(() =>
+                  navigate(`profile/${user._id}`)
+                );
+              }}
+              key="profile"
+              className="h-14 gap-2"
+            >
               <p className="font-semibold">Signed in as</p>
-              <p className="font-semibold">zoey@example.com</p>
+              <p className="font-semibold">{user.email}</p>
             </DropdownItem>
-            <DropdownItem key="logout" color="danger">
+            <DropdownItem
+              onPress={() =>
+                dispatch(logout()).then((data) => {
+                  if (!data.error) {
+                    addToast({
+                      title: "Logged out",
+                      description: "logged out successfully",
+                      color: "success",
+                    });
+                  }
+                })
+              }
+              key="logout"
+              color="danger"
+            >
               Log Out
             </DropdownItem>
           </DropdownMenu>
