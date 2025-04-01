@@ -22,11 +22,11 @@ export default function LoginPage() {
           navigate(`/auth/verification/${datax.email}`);
           dispatch(resendOTP(datax.email));
         }
-        // addToast({
-        //   title: "Error",
-        //   description: data.payload.message,
-        //   color: "danger",
-        // });
+        addToast({
+          title: "Error",
+          description: data.payload.message,
+          color: "danger",
+        });
       }
     });
   };
