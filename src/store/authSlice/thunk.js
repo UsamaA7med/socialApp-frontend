@@ -95,8 +95,9 @@ export const resendOTP = createAsyncThunk(
 export const logout = createAsyncThunk("auth/logout", async (_, thunkAPI) => {
   const { rejectWithValue } = thunkAPI;
   try {
-    const response = await axios.get(
+    const response = await axios.post(
       `${import.meta.env.VITE_API_URL}/auth/logout`,
+      {},
       {
         withCredentials: true,
       }
