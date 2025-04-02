@@ -26,22 +26,24 @@ const ProfilePage = () => {
   });
   return (
     <div className="w-full flex flex-col items-center">
-      <div className="w-1/2 flex justify-center">
+      <div className="w-1/2 h-full flex justify-center">
         <div className="w-full h-full relative min-h-72 min-w-72">
           <div className="w-full h-full overflow-hidden">
             <Image
-              className="w-full h-full object-contain rounded-xl "
+              className="object-contain rounded-xl "
               src={profile.coverImage.url}
             />
           </div>
-          <Avatar
-            className="w-28 h-28 z-10 -bottom-14 left-3 absolute "
-            src={profile.profileImage.url}
-          />
+          <div>
+            <Avatar
+              className="w-28 h-28 z-10 md:-bottom-14 md:left-3 bottom-10 left-1/3 absolute "
+              src={profile.profileImage.url}
+            />
+          </div>
         </div>
       </div>
-      <div className="mt-20 md:pl-3 w-1/2 justify-between flex flex-col gap-3 md:flex-row items-start">
-        <div className="flex w-full justify-between">
+      <div className="md:mt-20 md:pl-3 w-1/2 justify-between flex flex-col gap-3 md:flex-row items-start">
+        <div className="flex flex-col items-center gap-5 md:gap-0 md:flex-row w-full justify-between">
           <div className="flex max-w-96 flex-col gap-1">
             <p className="font-semibold text-2xl">{profile.fullname}</p>
             <p className="text-lg text-gray-500">@{profile.username}</p>

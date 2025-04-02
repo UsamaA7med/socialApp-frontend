@@ -71,7 +71,7 @@ export default function EditProfile() {
                   <Input
                     labelPlacement="outside"
                     name="coverImage"
-                    label="cover image"
+                    label="cover image 800x500px"
                     placeholder="Enter your full name"
                     type="file"
                   />

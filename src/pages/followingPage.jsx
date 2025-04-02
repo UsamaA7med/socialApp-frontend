@@ -1,10 +1,6 @@
 import { Avatar, Button } from "@heroui/react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  getFollowing,
-  getProfile,
-  toggleFollow,
-} from "../store/profileSlice/thunk";
+import { getFollowing, toggleFollow } from "../store/profileSlice/thunk";
 import { getUser } from "../store/authSlice/thunk";
 
 const FollowingPage = () => {

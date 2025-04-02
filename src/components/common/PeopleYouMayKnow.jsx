@@ -18,7 +18,7 @@ export default function PeopleYouMayKnow() {
   return (
     <div className="w-1/2 min-w-60 p-4  rounded-2xl shadow-lg">
       <h2 className="text-xl font-semibold mb-4">People You May Know</h2>
-      <div className="space-y-3 flex  justify-between gap-5 items-center">
+      <div className="space-y-3 flex flex-col lg:flex-row justify-between gap-5 items-center">
         {suggestedUsers.map((userx) => (
           <div
             key={userx._id}
