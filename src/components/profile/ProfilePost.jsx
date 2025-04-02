@@ -50,7 +50,7 @@ export default function ProfilePost({ post }) {
             </h5>
           </div>
         </div>
-        <ProfilePostOptions post={post} />
+        {auth.user._id === profile._id && <ProfilePostOptions post={post} />}
       </CardHeader>
       <CardBody className="px-3 py-0 text-small ">
         <p>{post.content}</p>
