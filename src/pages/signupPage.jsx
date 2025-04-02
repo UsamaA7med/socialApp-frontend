@@ -9,28 +9,13 @@ export default function SignupPage() {
   const [submitted, setSubmitted] = useState(null);
   const navigate = useNavigate();
   const disptach = useDispatch();
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
     const data = Object.fromEntries(new FormData(e.currentTarget));
-    disptach(signup(data)).then((data) => {
+    await disptach(signup(data));
+    disptach(resendOTP(data.meta.arg.email)).then((data) => {
       if (!data.error) {
-        addToast({
-          title: "Account created",
-          description:
-            "Your account has been created , you must verify your email address",
-          color: "success",
-        });
-        disptach(resendOTP(data.meta.arg.email)).then((data) => {
-          if (!data.error) {
-            navigate(`/auth/verification/${data.meta.arg.email}`);
-          } else {
-            addToast({
-              title: "Error",
-              description: data.payload.message,
-              color: "danger",
-            });
-          }
-        });
+        navigate(`/auth/verification/${data.meta.arg.email}`);
       } else {
         addToast({
           title: "Error",
