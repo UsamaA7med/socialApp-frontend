@@ -21,8 +21,17 @@ export default function SignupPage() {
             "Your account has been created , you must verify your email address",
           color: "success",
         });
-        navigate(`/auth/verification/${data.meta.arg.email}`);
-        disptach(resendOTP(data.email));
+        disptach(resendOTP(data.email)).then((data) => {
+          if (!data.error) {
+            navigate(`/auth/verification/${data.meta.arg.email}`);
+          } else {
+            addToast({
+              title: "Error",
+              description: data.payload.message,
+              color: "danger",
+            });
+          }
+        });
       } else {
         addToast({
           title: "Error",
