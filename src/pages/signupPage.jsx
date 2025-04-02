@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Form, Input, Button } from "@heroui/react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { signup } from "../store/authSlice/thunk";
+import { resendOTP, signup } from "../store/authSlice/thunk";
 import { addToast } from "@heroui/toast";
 
 export default function SignupPage() {
@@ -22,6 +22,7 @@ export default function SignupPage() {
           color: "success",
         });
         navigate(`/auth/verification/${data.meta.arg.email}`);
+        disptach(resendOTP(data.email));
       } else {
         addToast({
           title: "Error",
