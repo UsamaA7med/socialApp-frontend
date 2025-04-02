@@ -9,7 +9,6 @@ export default function SignupPage() {
   const [submitted, setSubmitted] = useState(null);
   const navigate = useNavigate();
   const disptach = useDispatch();
-  console.log(submitted);
   const onSubmit = (e) => {
     e.preventDefault();
     const data = Object.fromEntries(new FormData(e.currentTarget));
@@ -21,7 +20,7 @@ export default function SignupPage() {
             "Your account has been created , you must verify your email address",
           color: "success",
         });
-        disptach(resendOTP(data.email)).then((data) => {
+        disptach(resendOTP(data.meta.arg.email)).then((data) => {
           if (!data.error) {
             navigate(`/auth/verification/${data.meta.arg.email}`);
           } else {
