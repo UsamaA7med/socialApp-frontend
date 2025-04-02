@@ -8,13 +8,18 @@ import { addToast } from "@heroui/toast";
 export default function SignupPage() {
   const [submitted, setSubmitted] = useState(null);
   const navigate = useNavigate();
-  const disptach = useDispatch();
-  const onSubmit = async (e) => {
+  const dispatch = useDispatch();
+  const onSubmit = (e) => {
     e.preventDefault();
     const data = Object.fromEntries(new FormData(e.currentTarget));
-    await disptach(signup(data));
-    disptach(resendOTP(data.meta.arg.email)).then((data) => {
+    dispatch(signup(data)).then((data) => {
       if (!data.error) {
+        addToast({
+          title: "Account created",
+          description:
+            "Your account has been created , you must verify your email address",
+          color: "success",
+        });
         navigate(`/auth/verification/${data.meta.arg.email}`);
       } else {
         addToast({
