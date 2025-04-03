@@ -45,8 +45,7 @@ const FollowingPage = () => {
                   onPress={() => {
                     dispatch(toggleFollow(follower._id)).then((data) => {
                       if (!data.error) {
-                        dispatch(getFollowing(user._id));
-                        dispatch(getUser());
+                        dispatch(getProfile(user._id));
                       }
                     });
                   }}
