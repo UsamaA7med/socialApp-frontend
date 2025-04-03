@@ -1,11 +1,6 @@
 import { Avatar, Button } from "@heroui/react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  getFollowing,
-  getProfile,
-  toggleFollow,
-} from "../store/profileSlice/thunk";
-import { getUser } from "../store/authSlice/thunk";
+import { getProfile, toggleFollow } from "../store/profileSlice/thunk";
 import { useNavigate } from "react-router-dom";
 
 const FollowingPage = () => {
@@ -39,15 +34,12 @@ const FollowingPage = () => {
                   </p>
                 </div>
               </div>
-              {user._id === profile._id && (
+              {user.email === profile.email && (
                 <Button
                   variant="ghost"
                   onPress={() => {
-                    dispatch(toggleFollow(follower._id)).then((data) => {
-                      if (!data.error) {
-                        dispatch(getProfile(user._id));
-                      }
-                    });
+                    dispatch(toggleFollow(follower._id));
+                    dispatch(getProfile(user._id));
                   }}
                 >
                   unfollow
