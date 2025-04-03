@@ -21,7 +21,7 @@ const FollowingPage = () => {
           return (
             <div
               key={follower._id}
-              className="flex items-center justify-between gap-5"
+              className="flex items-center justify-between gap-5 cursor-pointer"
               onClick={() => {
                 dispatch(getProfile(follower._id));
                 navigate(`/profile/${follower._id}`);
