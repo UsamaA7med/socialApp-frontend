@@ -39,7 +39,7 @@ const FollowingPage = () => {
                   variant="ghost"
                   onPress={() => {
                     dispatch(toggleFollow(follower._id));
-                    dispatch(getProfile(user._id));
+                    dispatch(getProfile(user._id.toString()));
                   }}
                 >
                   unfollow
