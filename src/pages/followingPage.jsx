@@ -1,12 +1,18 @@
 import { Avatar, Button } from "@heroui/react";
 import { useDispatch, useSelector } from "react-redux";
-import { getFollowing, toggleFollow } from "../store/profileSlice/thunk";
+import {
+  getFollowing,
+  getProfile,
+  toggleFollow,
+} from "../store/profileSlice/thunk";
 import { getUser } from "../store/authSlice/thunk";
+import { useNavigate } from "react-router-dom";
 
 const FollowingPage = () => {
   const { following, profile } = useSelector((state) => state.profileSlice);
   const { user } = useSelector((state) => state.authSlice);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   return (
     <div className="flex flex-col gap-5">
       <h1 className="text-xl font-bold">Following ({following.length})</h1>
@@ -16,6 +22,10 @@ const FollowingPage = () => {
             <div
               key={follower._id}
               className="flex items-center justify-between gap-5"
+              onClick={() => {
+                dispatch(getProfile(follower._id));
+                navigate(`/profile/${follower._id}`);
+              }}
             >
               <div className="flex gap-5 items-center">
                 <Avatar src={follower.profileImage.url} size="lg" />
