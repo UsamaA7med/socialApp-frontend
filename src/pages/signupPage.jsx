@@ -20,7 +20,7 @@ export default function SignupPage() {
             "Your account has been created , you must verify your email address",
           color: "success",
         });
-        navigate(`/auth/verification/${data.meta.arg.email}`);
+        navigate(`/auth/login`);
       } else {
         addToast({
           title: "Error",
