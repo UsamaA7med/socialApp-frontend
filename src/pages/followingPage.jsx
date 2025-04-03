@@ -1,11 +1,10 @@
 import { Avatar, Button } from "@heroui/react";
 import { useDispatch, useSelector } from "react-redux";
-import { getProfile, toggleFollow } from "../store/profileSlice/thunk";
+import { getProfile } from "../store/profileSlice/thunk";
 import { useNavigate } from "react-router-dom";
 
 const FollowingPage = () => {
-  const { following, profile } = useSelector((state) => state.profileSlice);
-  const { user } = useSelector((state) => state.authSlice);
+  const { following } = useSelector((state) => state.profileSlice);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   return (
@@ -34,17 +33,6 @@ const FollowingPage = () => {
                   </p>
                 </div>
               </div>
-              {user.email === profile.email && (
-                <Button
-                  variant="ghost"
-                  onPress={() => {
-                    dispatch(toggleFollow(follower._id));
-                    dispatch(getProfile(user._id.toString()));
-                  }}
-                >
-                  unfollow
-                </Button>
-              )}
             </div>
           );
         })}
