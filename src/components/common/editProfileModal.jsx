@@ -65,14 +65,12 @@ export default function EditProfile() {
                     labelPlacement="outside"
                     name="profileImage"
                     label="profile image"
-                    placeholder="Enter your full name"
                     type="file"
                   />
                   <Input
                     labelPlacement="outside"
                     name="coverImage"
                     label="cover image 800x500px"
-                    placeholder="Enter your full name"
                     type="file"
                   />
                   <Input
@@ -80,11 +78,13 @@ export default function EditProfile() {
                     name="fullname"
                     label="personal information"
                     placeholder="Enter your full name"
+                    maxLength={20}
                   />
                   <Input
                     labelPlacement="outside"
                     name="username"
                     placeholder="Enter your username"
+                    maxLength={10}
                   />
                   <Textarea
                     labelPlacement="outside"

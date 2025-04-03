@@ -42,14 +42,14 @@ export default function SignupPage() {
             labelPlacement="outside"
             name="username"
             placeholder="Enter your username"
-            maxLength={25}
+            maxLength={10}
             minLength={3}
           />
           <Input
             labelPlacement="outside"
             name="fullname"
             placeholder="Enter your full name"
-            maxLength={25}
+            maxLength={20}
             minLength={3}
           />
 
