@@ -1,5 +1,5 @@
 import { Button, Form, InputOtp } from "@heroui/react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { resendOTP, verifyOTP } from "../store/authSlice/thunk";
@@ -10,23 +10,6 @@ const VerificationAccountPage = () => {
   const { email } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  useEffect(() => {
-    dispatch(resendOTP(email)).then((data) => {
-      if (!data.error) {
-        addToast({
-          title: "OTP sent",
-          description: "Check your email for the OTP code",
-          color: "success",
-        });
-      } else {
-        addToast({
-          title: "Error",
-          description: data.payload.message,
-          color: "danger",
-        });
-      }
-    });
-  }, [dispatch, email]);
   const [resendOtpCount, setResendOtpCount] = useState(true);
   setTimeout(() => {
     setResendOtpCount(false);

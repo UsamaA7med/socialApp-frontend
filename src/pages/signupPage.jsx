@@ -2,17 +2,17 @@ import { useState } from "react";
 import { Form, Input, Button } from "@heroui/react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { resendOTP, signup } from "../store/authSlice/thunk";
+import { signup } from "../store/authSlice/thunk";
 import { addToast } from "@heroui/toast";
 
 export default function SignupPage() {
   const [submitted, setSubmitted] = useState(null);
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const disptach = useDispatch();
   const onSubmit = (e) => {
     e.preventDefault();
     const data = Object.fromEntries(new FormData(e.currentTarget));
-    dispatch(signup(data)).then((data) => {
+    disptach(signup(data)).then((data) => {
       if (!data.error) {
         addToast({
           title: "Account created",
