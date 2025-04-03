@@ -56,6 +56,7 @@ const authSlice = createSlice({
       state.isAuthenticated = false;
     });
     builder.addCase(checkAuth.pending, (state) => {
+      state.isLoading = true;
       state.error = null;
       state.user = null;
       state.isAuthenticated = false;
