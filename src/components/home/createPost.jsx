@@ -53,7 +53,9 @@ export default function CreatePost() {
     const data = Object.fromEntries(new FormData(e.currentTarget));
     const formData = new FormData();
     formData.append("text", data.text);
-    formData.append("image", image);
+    if (image) {
+      formData.append("image", image);
+    }
     dispatch(createPost(formData)).then((data) => {
       if (!data.error) {
         addToast({
@@ -64,6 +66,7 @@ export default function CreatePost() {
       }
     });
     e.target.reset();
+    setTextLength(0);
     handleImageChange(e);
   };
   const handleImageChange = (event) => {
